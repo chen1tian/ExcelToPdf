@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs
+/ExcelToPdf/.vs
+/ExcelToPdf/src/ExcelToPdf/bin
+/ExcelToPdf/src/ExcelToPdf/obj
