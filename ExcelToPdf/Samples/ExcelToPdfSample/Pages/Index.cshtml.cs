@@ -22,7 +22,9 @@ namespace ExcelToPdfSample.Pages
 
         }
 
-        public void OnPostSample1()
+        public string Message { get; set; }
+
+        public void OnPostSample()
         {
             var excelFileInfo = new FileInfo("TestData/sample.xlsx");
             var htmlFileInfo = new FileInfo("Output/sample.html");
@@ -33,27 +35,17 @@ namespace ExcelToPdfSample.Pages
                 htmlFileInfo.Directory.Create();
             }
 
+            // export excel to html
             NpoiExcelHelper.ExcelToHtml(excelFileInfo.FullName, htmlFileInfo.FullName);
-            _converter.HtmlToPdf(htmlFileInfo.FullName, pdfFileInfo.FullName);
-        }
 
-        public void OnPostSample2()
-        {
-            var excelFileInfo = new FileInfo("TestData/sample2.xls");
-            var htmlFileInfo = new FileInfo("Output/sample2.html");
-            var pdfFileInfo = new FileInfo("Output/sample2.pdf");
-
-            if (htmlFileInfo.Directory != null && !htmlFileInfo.Directory.Exists)
-            {
-                htmlFileInfo.Directory.Create();
-            }
-
-            NpoiExcelHelper.ExcelToHtml(excelFileInfo.FullName, htmlFileInfo.FullName);
+            // convert html to pdf
             _converter.HtmlToPdf(htmlFileInfo.FullName, pdfFileInfo.FullName,
                 config =>
                 {
                     config.Orientation = Orientation.Landscape;
                 });
+
+            this.Message = $"Export Success, Pdf file save to: {pdfFileInfo.FullName}";
         }
     }
 }

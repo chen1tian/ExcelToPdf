@@ -1,57 +1,69 @@
 # ExcelToPdf
-excel export to pdf using dotnet core npoi
 
-https://github.com/HakanL/WkHtmlToPdf-DotNet
+[中文版](./README.md) | [English](./doc/README_En.md)
 
+This is a simple project to export Excel to PDF.
 
+It consists of two steps:
+1. Use ` NpoiExcelHelper. ExcelToHtml ` method will excel export to HTML
+2. Use `Pdfhelper.HtmlToPdf` to convert HTML to PDF
 
-https://github.com/nissl-lab/npoi/wiki/How-to-use-NPOI-on-Linux
+Npoi and WkHtmlToPdf did almost all the work, and because of that, please go to these two projects to view the relevant documents, thank them very much
 
-## How to use
+- [WkHtmlToPdf-DotNet](https://github.com/HakanL/WkHtmlToPdf-DotNet)
+- [NPOI](https://github.com/nissl-lab/npoi/wiki/How-to-use-NPOI-on-Linux)
 
-1. using `NpoiExcelHelper` export excel to .html
-2. using `PdfHelper` convert .html to pdf
+## Sample
 
-## Using in asp.net core
+For details, please refer to `ExcelToPdfSample/Pages/Index.cshtml.cs`.
 
-> you must use `services.AddHtmlToPdf()` to inject, dot not new Converter() in your method.
+```csharp
+public void OnPostSample2()
+{
+	var excelFileInfo = new FileInfo("TestData/sample.xls");
+	var htmlFileInfo = new FileInfo("Output/sample.html");
+	var pdfFileInfo = new FileInfo("Output/sample.pdf");
 
-1. in StartUp.cs
-
-	```
-	services.AddHtmlToPdf();
-	```
-
-2. in controller
-
-	```
-
-	private readonly IConverter _pdfConverter;
-
-	/// <summary>
-	/// ctor
-	/// </summary>
-	public TestController(IConverter pdfConverter)
+	if (htmlFileInfo.Directory != null && !htmlFileInfo.Directory.Exists)
 	{
-		_pdfConverter = pdfConverter;
+		htmlFileInfo.Directory.Create();
 	}
 
-	/// <summary>
-	/// ctor
-	/// </summary>
-	[HttpPost("Test")]
-	public void TestMethod()
+	// export excel to html
+	NpoiExcelHelper.ExcelToHtml(excelFileInfo.FullName, htmlFileInfo.FullName, configOptions: option =>
 	{
-		...
-		_pdfConverter.HtmlToPdf(htmlFilePath, pdfFilePath);
-		...
-	}
-	```
+		option.OutputColumnHeaders = true;
+	});
 
-## in docker
+	// convert html to pdf
+	_converter.HtmlToPdf(htmlFileInfo.FullName, pdfFileInfo.FullName,
+		config =>
+		{
+			config.Orientation = Orientation.Landscape;
+		});
+}
+```
 
-to be continued...
+> Note that using asp.net requires the injection of `IConverter` first, as follows:
+```csharp
+in StartUp.cs
 
-## sample
+// injection
+services.AddHtmlToPdf();
+```
 
-to be continued...
+## Custom
+
+### Custom excel export
+
+With the `NpoiExcelHelper.ExcelToHtml` method, can use the configOptions parameters to HTML do custom processing for export, specific definition refer to:[Npoi ExcelToHtmlConverter](https://github.com/nissl-lab/npoi/blob/edac37ddf7c442e8e66b47f72d53d9aa81c5db35/ooxml/SS/Converter/ExcelToHtmlConverter.cs)
+
+
+### Custom pdf convert
+
+With the `PdfHelper.htmltopdf` method, you can use the configGlobalSettings parameter to define the PDF export. For details, see:
+[WkHtmlToPdf-DotNet](https://github.com/HakanL/WkHtmlToPdf-DotNet)
+
+## Docker and linux
+
+[How-to-use-NPOI-on-Linux](https://github.com/nissl-lab/npoi/wiki/How-to-use-NPOI-on-Linux)

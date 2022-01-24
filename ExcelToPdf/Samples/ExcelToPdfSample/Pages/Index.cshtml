@@ -8,13 +8,12 @@
     <h1 class="display-4">Welcome</h1>
 
     <p>
-        <form method="post" asp-page-handler="Sample1">
-            <input type="submit" value="Sample1" />
+        <form method="post" asp-page-handler="Sample">
+            <input type="submit" value="Run Sample" />
         </form>
     </p>
+
     <p>
-        <form method="post" asp-page-handler="Sample2">
-            <input type="submit" value="Sample2" />
-        </form>
+        @Model.Message
     </p>
 </div>

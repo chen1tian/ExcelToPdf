@@ -16,10 +16,10 @@ namespace ExcelToPdf
         /// <paramref name="excelPath">excel文件路径</paramref>
         /// <paramref name="htmlFilePath">html文件地址</paramref>
         /// <paramref name="removeSheetName">是否移除生成后的Sheet名称</paramref>
-        /// <paramref name="options">配置转换器</paramref>
+        /// <paramref name="configOptions">配置转换器</paramref>
         /// <paramref name="afterProcess">处理完成后的动作</paramref>
         /// </summary>
-        public static void ExcelToHtml(string excelPath, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> options = null, Action<ExcelToHtmlConverter> afterProcess = null)
+        public static void ExcelToHtml(string excelPath, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null)
         {
             IWorkbook workbook;
             FileStream fs = new FileStream(excelPath, FileMode.Open, FileAccess.ReadWrite);
@@ -38,7 +38,7 @@ namespace ExcelToPdf
                 throw new Exception($"不支持文件格式{fileExt}");
             }
 
-            ExcelToHtml(workbook, htmlFilePath, removeSheetName, options, afterProcess);
+            ExcelToHtml(workbook, htmlFilePath, removeSheetName, configOptions, afterProcess);
             workbook.Close();
             fs.Close();
         }
@@ -48,17 +48,17 @@ namespace ExcelToPdf
         /// <paramref name="workbook">工作簿对象</paramref>
         /// <paramref name="htmlFilePath">html文件地址</paramref>
         /// <paramref name="removeSheetName">是否移除生成后的Sheet名称</paramref>
-        /// <paramref name="options">配置转换器</paramref>
+        /// <paramref name="configOptions">配置转换器</paramref>
         /// <paramref name="afterProcess">处理完成后的动作</paramref>
         /// </summary>
-        public static void ExcelToHtml(IWorkbook workbook, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> options = null, Action<ExcelToHtmlConverter> afterProcess = null)
+        public static void ExcelToHtml(IWorkbook workbook, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null)
         {
             ExcelToHtmlConverter excelToHtmlConverter = new ExcelToHtmlConverter();
-
+            
             // 配置转换器
-            if (options != null)
+            if (configOptions != null)
             {
-                options(excelToHtmlConverter);
+                configOptions(excelToHtmlConverter);
             }
             else
             {
