@@ -8,9 +8,12 @@
 1. 使用`NpoiExcelHelper.ExcelToHtml`方法将excel导出为html
 2. 使用`PdfHelper.HtmlToPdf`转换html为pdf
 
-npoi和WkHtmlToPdf做了几乎所有的工作，也因为这样，相关的文档请移步到这两个项目查看，特别感谢
+npoi和WkHtmlToPdf做了几乎所有的工作，也因为这样，需要查询文档时请移步到这两个项目查看。
+特别感谢
 - [WkHtmlToPdf-DotNet](https://github.com/HakanL/WkHtmlToPdf-DotNet)
 - [NPOI](https://github.com/nissl-lab/npoi/wiki/How-to-use-NPOI-on-Linux)
+
+本项目也对自定义做了简单的封装，参考文档自定义一节。
 
 ## 示例
 
