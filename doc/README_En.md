@@ -63,8 +63,35 @@ With the `NpoiExcelHelper.ExcelToHtml` method, can use the configOptions paramet
 
 ### Custom pdf convert
 
-With the `PdfHelper.htmltopdf` method, you can use the configGlobalSettings parameter to define the PDF export. For details, see:
-[WkHtmlToPdf-DotNet](https://github.com/HakanL/WkHtmlToPdf-DotNet)
+With the `PdfHelper.HtmlToPdf` method, can use configGlobalSettings parameter to custom pdf:
+```csharp
+// ... other code ...
+_converter.HtmlToPdf(htmlFileInfo.FullName, pdfFileInfo.FullName,
+	config =>
+	{
+		config.Orientation = Orientation.Portrait;
+	});
+// ... other code ...
+```
+
+**GlobalSettings Commonly used attributes：**
+
+|parameter|comment|default|note|
+|-|-|-|-|
+|Orientation|he orientation of the output document|portrait|Portrait, Landscape|
+|ColorMode|Should the output be printed in color or gray scale|color||
+|UseCompression|Should we use loss less compression when creating the pdf file.|true||
+|DPI|What dpi should we use when printing|96|
+|DocumentTitle|The title of the PDF document|empty||
+|ImageDPI|The maximal DPI to use for images in the pdf document|600||
+|imageQuality|The jpeg compression factor to use when producing the pdf document|94||
+|PaperSize|Size of output paper||
+|PaperWidth|The height of the output document||
+|PaperHeight|The width of the output document||
+|MarginLeft|Size of the left margin||
+|MarginRight|Size of the right margin||
+|MarginTop|Size of the top margin||
+|MarginBottom|Size of the bottom margin||
 
 ## Docker and linux
 

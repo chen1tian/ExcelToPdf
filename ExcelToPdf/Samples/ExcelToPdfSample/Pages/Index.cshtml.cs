@@ -42,7 +42,7 @@ namespace ExcelToPdfSample.Pages
             _converter.HtmlToPdf(htmlFileInfo.FullName, pdfFileInfo.FullName,
                 config =>
                 {
-                    config.Orientation = Orientation.Landscape;
+                    config.Orientation = Orientation.Portrait;
                 });
 
             this.Message = $"Export Success, Pdf file save to: {pdfFileInfo.FullName}";

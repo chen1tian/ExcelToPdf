@@ -63,8 +63,38 @@ services.AddHtmlToPdf();
 
 ### 自定义pdf转换
 
-使用`PdfHelper.HtmlToPdf`方法时，可以使用configGlobalSettings参数来定义pdf导出，具体请参考：
-[WkHtmlToPdf-DotNet](https://github.com/HakanL/WkHtmlToPdf-DotNet)
+使用`PdfHelper.HtmlToPdf`方法时，可以使用configGlobalSettings参数来定义pdf导出:
+```csharp
+// ... other code ...
+_converter.HtmlToPdf(htmlFileInfo.FullName, pdfFileInfo.FullName,
+	config =>
+	{
+		config.Orientation = Orientation.Portrait;
+	});
+// ... other code ...
+```
+
+**GlobalSettings 常用属性：**
+
+|参数名|说明|默认值|备注|
+|-|-|-|-|
+|Orientation|排版方向|竖向|Portrait：竖排，Landscape：横排|
+|ColorMode|颜色模式|彩色|Color：彩色，Grayscale:灰度|
+|UseCompression|使用压缩|是||
+|DPI|打印dpi|96|
+|DocumentTitle|文档标题|空||
+|ImageDPI|图片DPI|600||
+|imageQuality|图片质量|94||
+|PaperSize|纸面尺寸||
+|PaperWidth|文档宽度||
+|PaperHeight|文档高度||
+|MarginLeft|左边距||
+|MarginRight|右边距||
+|MarginTop|上边距||
+|MarginBottom|下边距||
+
+全部参数请参考：
+[WkHtmlToPdf GlobalSettings源码](https://github.com/HakanL/WkHtmlToPdf-DotNet/blob/master/src/WkHtmlToPdf-DotNet/Settings/GlobalSettings.cs)
 
 ## Docker以及linux下使用
 
