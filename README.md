@@ -1,6 +1,6 @@
 # Instruction
 
-[中文版](./README.md) | [English](./doc/README_En.md)
+[中文版](/README.md) | [English](./doc/README_En.md)
 
 这是一个简单的项目，用来将excel导出为pdf。
 

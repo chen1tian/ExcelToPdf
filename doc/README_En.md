@@ -1,6 +1,6 @@
 # ExcelToPdf
 
-[中文版](./README.md) | [English](./doc/README_En.md)
+[中文版](/README.md) | [English](./doc/README_En.md)
 
 This is a simple project to export Excel to PDF.
 
@@ -13,9 +13,11 @@ Npoi and WkHtmlToPdf did almost all the work, and because of that, please go to 
 - [WkHtmlToPdf-DotNet](https://github.com/HakanL/WkHtmlToPdf-DotNet)
 - [NPOI](https://github.com/nissl-lab/npoi/wiki/How-to-use-NPOI-on-Linux)
 
+This project also provides a simple encapsulation of customizations, see the customization section of the documentation.
+
 ## Sample
 
-For details, please refer to `ExcelToPdfSample/Pages/Index.cshtml.cs`.
+For details, please refer to `ExcelToPdfSample` project.
 
 ```csharp
 public void OnPostSample2()
