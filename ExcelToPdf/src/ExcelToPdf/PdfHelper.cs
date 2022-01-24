@@ -21,35 +21,36 @@ namespace ExcelToPdf
         /// <param name="htmlFilePath"></param>
         /// <param name="pdfFilePath"></param>
         /// <param name="converter">转换器</param>
-        /// <param name="docFactory"></param>
-        public static void HtmlToPdf(this IConverter converter, string htmlFilePath, string pdfFilePath, Func<HtmlToPdfDocument> docFactory = null)
+        /// <param name="configGlobalSettings"></param>
+        public static void HtmlToPdf(this IConverter converter, string htmlFilePath, string pdfFilePath, Action<GlobalSettings>? configGlobalSettings = null)
         {
-            HtmlToPdfDocument doc = null;
+            // 默认配置
+            var globalSettings = new GlobalSettings()
+            {
+                ColorMode = ColorMode.Color,
+                Orientation = Orientation.Portrait,
+                PaperSize = PaperKind.A4,
+                Margins = new MarginSettings() { Top = 10 },
+                Out = pdfFilePath,
+            };
 
-            // 如果为配置，那么使用默认设置
-            if (docFactory != null)
+            // 传入配置
+            if (configGlobalSettings != null)
             {
-                doc = docFactory();
+                configGlobalSettings(globalSettings);
             }
-            else
+
+            
+            var doc = new HtmlToPdfDocument()
             {
-                doc = new HtmlToPdfDocument()
-                {
-                    GlobalSettings = {
-                        ColorMode = ColorMode.Color,
-                        Orientation = Orientation.Portrait,
-                        PaperSize = PaperKind.A4,
-                        Margins = new MarginSettings() { Top = 10 },
-                        Out = pdfFilePath,
-                    },
-                    Objects = {
+                GlobalSettings = globalSettings,
+                Objects = {
                         new ObjectSettings()
                         {
                             Page = htmlFilePath,
                         },
                     }
-                };
-            }
+            };            
 
             converter.Convert(doc);
         }

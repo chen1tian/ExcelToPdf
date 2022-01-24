@@ -1,7 +1,4 @@
 # ExcelToPdf
-
-
-
 excel export to pdf using dotnet core npoi
 
 https://github.com/HakanL/WkHtmlToPdf-DotNet

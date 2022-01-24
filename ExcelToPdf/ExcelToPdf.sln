@@ -12,6 +12,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{446A41FB-7DC4-49
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{13D44992-91B2-49EF-A300-6DDCE0D771E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelToPdfSample", "Samples\ExcelToPdfSample\ExcelToPdfSample.csproj", "{68CC8D4B-A37F-46C5-A36A-E78AADD1D0D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{B8D9D854-6F5F-4C3E-AAF2-D3695E7455A2}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\README_En.md = ..\doc\README_En.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,12 +31,17 @@ Global
 		{1DC2E3AC-6522-4D30-927D-B002440B06C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DC2E3AC-6522-4D30-927D-B002440B06C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DC2E3AC-6522-4D30-927D-B002440B06C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68CC8D4B-A37F-46C5-A36A-E78AADD1D0D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68CC8D4B-A37F-46C5-A36A-E78AADD1D0D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68CC8D4B-A37F-46C5-A36A-E78AADD1D0D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68CC8D4B-A37F-46C5-A36A-E78AADD1D0D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1DC2E3AC-6522-4D30-927D-B002440B06C6} = {C97F8CD8-2D20-473F-BEED-7FBABD892551}
+		{68CC8D4B-A37F-46C5-A36A-E78AADD1D0D8} = {13D44992-91B2-49EF-A300-6DDCE0D771E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D985086-A6DF-41F2-BAEC-79EF4D0C3972}
