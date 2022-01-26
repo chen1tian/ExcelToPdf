@@ -65,7 +65,7 @@ public void OnPostSimpleExport()
 
 ### 自定义pdf转换
 
-使用`PdfHelper.HtmlToPdf`方法时，可以使用configGlobalSettings参数来定义pdf导出:
+使用`ExportToPdf`方法时，可以使用configGlobalSettings参数来定义pdf导出:
 ```csharp
 // ... other code ...
 // export pdf

@@ -57,14 +57,6 @@ public void OnPostSimpleExport()
 }
 ```
 
-> Note that using asp.net requires the injection of `IConverter` first, as follows:
-```csharp
-in StartUp.cs
-
-// injection
-services.AddHtmlToPdf();
-```
-
 ## Custom
 
 ### Custom excel export to html
@@ -74,7 +66,7 @@ With the `NpoiExcelHelper.ExcelToHtml` method, can use the configOptions paramet
 
 ### Custom pdf convert
 
-With the `PdfHelper.HtmlToPdf` method, can use configGlobalSettings parameter to custom pdf:
+With the `ExportToPdf` method, can use configGlobalSettings parameter to custom pdf:
 ```csharp
 // ... other code ...
 // export pdf
