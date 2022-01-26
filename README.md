@@ -1,4 +1,4 @@
-# Instruction
+# 说明
 
 [中文版](/README.md) | [English](./doc/README_En.md)
 
@@ -15,12 +15,18 @@ npoi和WkHtmlToPdf做了几乎所有的工作，也因为这样，需要查询�
 
 本项目也对自定义做了简单的封装，参考文档自定义一节。
 
+## 安装
+
+```
+Install-Package ExcelToPdf -Version 6.0.0
+```
+
 ## 示例
 
 具体请参考`ExcelToPdfSample/Pages/Index.cshtml.cs`。
 
 ```csharp
-public void OnPostSample2()
+public void OnPostSample()
 {
 	var excelFileInfo = new FileInfo("TestData/sample.xls");
 	var htmlFileInfo = new FileInfo("Output/sample.html");
@@ -34,7 +40,7 @@ public void OnPostSample2()
 	// export excel to html
 	NpoiExcelHelper.ExcelToHtml(excelFileInfo.FullName, htmlFileInfo.FullName, configOptions: option =>
 	{
-		option.OutputColumnHeaders = true;
+		option.OutputColumnHeaders = false;
 	});
 
 	// convert html to pdf

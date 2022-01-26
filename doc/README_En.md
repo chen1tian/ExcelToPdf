@@ -15,12 +15,18 @@ Npoi and WkHtmlToPdf did almost all the work, and because of that, please go to 
 
 This project also provides a simple encapsulation of customizations, see the customization section of the documentation.
 
+## Install
+
+```
+Install-Package ExcelToPdf -Version 6.0.0
+```
+
 ## Sample
 
 For details, please refer to `ExcelToPdfSample` project.
 
 ```csharp
-public void OnPostSample2()
+public void OnPostSample()
 {
 	var excelFileInfo = new FileInfo("TestData/sample.xls");
 	var htmlFileInfo = new FileInfo("Output/sample.html");
@@ -34,7 +40,7 @@ public void OnPostSample2()
 	// export excel to html
 	NpoiExcelHelper.ExcelToHtml(excelFileInfo.FullName, htmlFileInfo.FullName, configOptions: option =>
 	{
-		option.OutputColumnHeaders = true;
+		option.OutputColumnHeaders = false;
 	});
 
 	// convert html to pdf
