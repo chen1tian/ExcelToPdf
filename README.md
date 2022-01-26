@@ -25,44 +25,40 @@ Install-Package ExcelToPdf -Version 6.0.0
 
 具体请参考`ExcelToPdfSample/Pages/Index.cshtml.cs`。
 
+### 依赖注入
 ```csharp
-public void OnPostSample()
-{
-	var excelFileInfo = new FileInfo("TestData/sample.xls");
-	var htmlFileInfo = new FileInfo("Output/sample.html");
-	var pdfFileInfo = new FileInfo("Output/sample.pdf");
-
-	if (htmlFileInfo.Directory != null && !htmlFileInfo.Directory.Exists)
-	{
-		htmlFileInfo.Directory.Create();
-	}
-
-	// export excel to html
-	NpoiExcelHelper.ExcelToHtml(excelFileInfo.FullName, htmlFileInfo.FullName, configOptions: option =>
-	{
-		option.OutputColumnHeaders = false;
-	});
-
-	// convert html to pdf
-	_converter.HtmlToPdf(htmlFileInfo.FullName, pdfFileInfo.FullName,
-		config =>
-		{
-			config.Orientation = Orientation.Landscape;
-		});
-}
+// in StartUp.cs
+services.AddExcelToPdf("temp");
 ```
 
-> 注意在asp.net中使用需要先注入`IConverter`，如下:
+### 导出
 ```csharp
-in StartUp.cs
+private readonly ILogger<IndexModel> _logger;
+private readonly ExcelToPdfService _excelToPdfService;
 
-// 注入
-services.AddHtmlToPdf();
+// inject ExcelToPdfService from controller
+public IndexModel(ILogger<IndexModel> logger, ExcelToPdfService excelToPdfService)
+{
+	_logger = logger;
+	_excelToPdfService = excelToPdfService;
+}
+
+// export to pdf
+public void OnPostSimpleExport()
+{
+	FileInfo excelFileInfo, htmlFileInfo, pdfFileInfo;
+	SetupSample(out excelFileInfo, out htmlFileInfo, out pdfFileInfo);
+
+	// export pdf
+	_excelToPdfService.ExportToPdf(excelFileInfo.FullName, pdfFileInfo.FullName);
+
+	this.Message = $"Export Success, Pdf file save to: {pdfFileInfo.FullName}";
+}
 ```
 
 ## 自定义
 
-### 自定义excel导出
+### 自定义excel导出为Html
 
 使用`NpoiExcelHelper.ExcelToHtml`方法时，可以用configOptions参数来对导出的html做自定义处理，具体定义请参考：[Npoi ExcelToHtmlConverter](https://github.com/nissl-lab/npoi/blob/edac37ddf7c442e8e66b47f72d53d9aa81c5db35/ooxml/SS/Converter/ExcelToHtmlConverter.cs)
 
@@ -72,11 +68,14 @@ services.AddHtmlToPdf();
 使用`PdfHelper.HtmlToPdf`方法时，可以使用configGlobalSettings参数来定义pdf导出:
 ```csharp
 // ... other code ...
-_converter.HtmlToPdf(htmlFileInfo.FullName, pdfFileInfo.FullName,
-	config =>
-	{
-		config.Orientation = Orientation.Portrait;
-	});
+// export pdf
+_excelToPdfService.ExportToPdf(excelFileInfo.FullName, pdfFileInfo.FullName, configPdfGlobalSettings: config =>
+{
+	config.Orientation = Orientation.Landscape;
+	config.ColorMode = ColorMode.Grayscale;
+	config.Margins.Left = 150;
+	config.Margins.Top = 50;
+});
 // ... other code ...
 ```
 

@@ -25,30 +25,35 @@ Install-Package ExcelToPdf -Version 6.0.0
 
 For details, please refer to `ExcelToPdfSample` project.
 
+### Dependency Injection
 ```csharp
-public void OnPostSample()
+// in StartUp.cs
+services.AddExcelToPdf("temp");
+```
+
+### Export
+
+```csharp
+private readonly ILogger<IndexModel> _logger;
+private readonly ExcelToPdfService _excelToPdfService;
+
+// inject ExcelToPdfService from controller
+public IndexModel(ILogger<IndexModel> logger, ExcelToPdfService excelToPdfService)
 {
-	var excelFileInfo = new FileInfo("TestData/sample.xls");
-	var htmlFileInfo = new FileInfo("Output/sample.html");
-	var pdfFileInfo = new FileInfo("Output/sample.pdf");
+	_logger = logger;
+	_excelToPdfService = excelToPdfService;
+}
 
-	if (htmlFileInfo.Directory != null && !htmlFileInfo.Directory.Exists)
-	{
-		htmlFileInfo.Directory.Create();
-	}
+// export to pdf
+public void OnPostSimpleExport()
+{
+	FileInfo excelFileInfo, htmlFileInfo, pdfFileInfo;
+	SetupSample(out excelFileInfo, out htmlFileInfo, out pdfFileInfo);
 
-	// export excel to html
-	NpoiExcelHelper.ExcelToHtml(excelFileInfo.FullName, htmlFileInfo.FullName, configOptions: option =>
-	{
-		option.OutputColumnHeaders = false;
-	});
+	// export pdf
+	_excelToPdfService.ExportToPdf(excelFileInfo.FullName, pdfFileInfo.FullName);
 
-	// convert html to pdf
-	_converter.HtmlToPdf(htmlFileInfo.FullName, pdfFileInfo.FullName,
-		config =>
-		{
-			config.Orientation = Orientation.Landscape;
-		});
+	this.Message = $"Export Success, Pdf file save to: {pdfFileInfo.FullName}";
 }
 ```
 
@@ -62,7 +67,7 @@ services.AddHtmlToPdf();
 
 ## Custom
 
-### Custom excel export
+### Custom excel export to html
 
 With the `NpoiExcelHelper.ExcelToHtml` method, can use the configOptions parameters to HTML do custom processing for export, specific definition refer to:[Npoi ExcelToHtmlConverter](https://github.com/nissl-lab/npoi/blob/edac37ddf7c442e8e66b47f72d53d9aa81c5db35/ooxml/SS/Converter/ExcelToHtmlConverter.cs)
 
@@ -72,11 +77,14 @@ With the `NpoiExcelHelper.ExcelToHtml` method, can use the configOptions paramet
 With the `PdfHelper.HtmlToPdf` method, can use configGlobalSettings parameter to custom pdf:
 ```csharp
 // ... other code ...
-_converter.HtmlToPdf(htmlFileInfo.FullName, pdfFileInfo.FullName,
-	config =>
-	{
-		config.Orientation = Orientation.Portrait;
-	});
+// export pdf
+_excelToPdfService.ExportToPdf(excelFileInfo.FullName, pdfFileInfo.FullName, configPdfGlobalSettings: config =>
+{
+	config.Orientation = Orientation.Landscape;
+	config.ColorMode = ColorMode.Grayscale;
+	config.Margins.Left = 150;
+	config.Margins.Top = 50;
+});
 // ... other code ...
 ```
 

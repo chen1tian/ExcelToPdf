@@ -3,8 +3,10 @@ using NPOI.SS.Converter;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.Text.RegularExpressions;
+using WkHtmlToPdfDotNet;
+using WkHtmlToPdfDotNet.Contracts;
 
-namespace ExcelToPdf
+namespace ExcelToPdf.Helper
 {
     /// <summary>
     /// 基于Npoi的Excel处理类
@@ -12,19 +14,17 @@ namespace ExcelToPdf
     public class NpoiExcelHelper
     {
         /// <summary>
-        /// excel转html
-        /// <paramref name="excelPath">excel文件路径</paramref>
-        /// <paramref name="htmlFilePath">html文件地址</paramref>
-        /// <paramref name="removeSheetName">是否移除生成后的Sheet名称</paramref>
-        /// <paramref name="configOptions">配置转换器</paramref>
-        /// <paramref name="afterProcess">处理完成后的动作</paramref>
+        /// get IWorkbook instance from file
         /// </summary>
-        public static void ExcelToHtml(string excelPath, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null)
+        /// <param name="excelFilePath"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static IWorkbook GetWorkbook(string excelFilePath)
         {
             IWorkbook workbook;
-            FileStream fs = new FileStream(excelPath, FileMode.Open, FileAccess.ReadWrite);
+            FileStream fs = new FileStream(excelFilePath, FileMode.Open, FileAccess.ReadWrite);
 
-            string fileExt = Path.GetExtension(excelPath).ToLower();
+            string fileExt = Path.GetExtension(excelFilePath).ToLower();
             if (fileExt == ".xlsx")
             {
                 workbook = new XSSFWorkbook(fs);
@@ -38,9 +38,23 @@ namespace ExcelToPdf
                 throw new Exception($"不支持文件格式{fileExt}");
             }
 
-            ExcelToHtml(workbook, htmlFilePath, removeSheetName, configOptions, afterProcess);
-            workbook.Close();
             fs.Close();
+            return workbook;
+        }
+
+        /// <summary>
+        /// excel转html
+        /// <paramref name="excelFilePath">excel文件路径</paramref>
+        /// <paramref name="htmlFilePath">html文件地址</paramref>
+        /// <paramref name="removeSheetName">是否移除生成后的Sheet名称</paramref>
+        /// <paramref name="configOptions">配置转换器</paramref>
+        /// <paramref name="afterProcess">处理完成后的动作</paramref>
+        /// </summary>
+        public static void ExcelToHtml(string excelFilePath, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null)
+        {
+            IWorkbook workbook = GetWorkbook(excelFilePath);
+            ExcelToHtml(workbook, htmlFilePath, removeSheetName, configOptions, afterProcess);
+            workbook.Close();            
         }
 
         /// <summary>
@@ -54,7 +68,7 @@ namespace ExcelToPdf
         public static void ExcelToHtml(IWorkbook workbook, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null)
         {
             ExcelToHtmlConverter excelToHtmlConverter = new ExcelToHtmlConverter();
-            
+
             // 配置转换器
             if (configOptions != null)
             {
@@ -93,6 +107,7 @@ namespace ExcelToPdf
 
             // 输出
             excelToHtmlConverter.Document.Save(htmlFilePath);
+            workbook.Close();
         }
     }
 }

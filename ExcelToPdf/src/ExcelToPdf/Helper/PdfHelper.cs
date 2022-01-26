@@ -8,7 +8,7 @@ using System.IO;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
 
-namespace ExcelToPdf
+namespace ExcelToPdf.Helper
 {
     /// <summary>
     /// Pdf帮助器
@@ -40,7 +40,7 @@ namespace ExcelToPdf
                 configGlobalSettings(globalSettings);
             }
 
-            
+
             var doc = new HtmlToPdfDocument()
             {
                 GlobalSettings = globalSettings,
@@ -50,7 +50,7 @@ namespace ExcelToPdf
                             Page = htmlFilePath,
                         },
                     }
-            };            
+            };
 
             converter.Convert(doc);
         }

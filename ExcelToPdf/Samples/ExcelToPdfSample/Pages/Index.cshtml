@@ -8,12 +8,24 @@
     <h1 class="display-4">Welcome</h1>
 
     <p>
-        <form method="post" asp-page-handler="Sample">
-            <input type="submit" value="Run Sample" />
+        <form method="post" asp-page-handler="SimpleExport">
+            <input type="submit" value="Simple Export" />
         </form>
     </p>
 
     <p>
+        <form method="post" asp-page-handler="CustomPdf">
+            <input type="submit" value="Custom Pdf" />
+        </form>
+    </p>
+
+    <p>
+        <form method="post" asp-page-handler="Export2Setp">
+            <input type="submit" value="Tow Step Export" />
+        </form>
+    </p>
+
+    <p class="bg-info">
         @Model.Message
     </p>
 </div>

@@ -1,4 +1,4 @@
-using CommonLibsCore.Pdf.Extensions;
+using ExcelToPdf.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 // add html to pdf converter
-builder.Services.AddHtmlToPdf();
+builder.Services.AddExcelToPdf("temp");
 
 var app = builder.Build();
 
