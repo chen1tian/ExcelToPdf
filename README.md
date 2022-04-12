@@ -18,7 +18,7 @@ npoi和WkHtmlToPdf做了几乎所有的工作，也因为这样，需要查询�
 ## 安装
 
 ```
-Install-Package ExcelToPdf -Version 6.0.0
+Install-Package ExcelToPdf
 ```
 
 ## 示例
