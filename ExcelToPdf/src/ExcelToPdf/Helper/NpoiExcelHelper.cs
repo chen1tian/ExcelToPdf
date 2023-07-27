@@ -50,7 +50,7 @@ namespace ExcelToPdf.Helper
         /// <paramref name="configOptions">配置转换器</paramref>
         /// <paramref name="afterProcess">处理完成后的动作</paramref>
         /// </summary>
-        public static void ExcelToHtml(string excelFilePath, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null)
+        public static void ExcelToHtml(string excelFilePath, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter>? configOptions = null, Action<ExcelToHtmlConverter>? afterProcess = null)
         {
             IWorkbook workbook = GetWorkbook(excelFilePath);
             ExcelToHtml(workbook, htmlFilePath, removeSheetName, configOptions, afterProcess);
@@ -66,6 +66,24 @@ namespace ExcelToPdf.Helper
         /// <paramref name="afterProcess">处理完成后的动作</paramref>
         /// </summary>
         public static void ExcelToHtml(IWorkbook workbook, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null)
+        {
+            var stream = ExcelToHtml(workbook, removeSheetName, configOptions, afterProcess);
+            // stream输出为html
+            using (var fileStream = new FileStream(htmlFilePath, FileMode.Create))
+            {
+                stream.CopyTo(fileStream);
+            }
+        }
+
+        /// <summary>
+        /// excel转html
+        /// <paramref name="workbook">工作簿对象</paramref>
+        /// <paramref name="htmlFilePath">html文件地址</paramref>
+        /// <paramref name="removeSheetName">是否移除生成后的Sheet名称</paramref>
+        /// <paramref name="configOptions">配置转换器</paramref>
+        /// <paramref name="afterProcess">处理完成后的动作</paramref>
+        /// </summary>
+        public static Stream ExcelToHtml(IWorkbook workbook, bool removeSheetName = true, Action<ExcelToHtmlConverter>? configOptions = null, Action<ExcelToHtmlConverter>? afterProcess = null)
         {
             ExcelToHtmlConverter excelToHtmlConverter = new ExcelToHtmlConverter();
 
@@ -106,8 +124,10 @@ namespace ExcelToPdf.Helper
                 );
 
             // 输出
-            excelToHtmlConverter.Document.Save(htmlFilePath);
-            workbook.Close();
+            var stream = new MemoryStream();
+            excelToHtmlConverter.Document.Save(stream);
+            stream.Position = 0;
+            return stream;
         }
     }
 }
