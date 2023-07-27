@@ -18,7 +18,7 @@ This project also provides a simple encapsulation of customizations, see the cus
 ## Install
 
 ```
-Install-Package ExcelToPdf -Version 6.0.0
+Install-Package ExcelToPdf
 ```
 
 ## Sample
