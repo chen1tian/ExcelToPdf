@@ -2,6 +2,8 @@
 using NPOI.SS.Converter;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
@@ -50,7 +52,7 @@ namespace ExcelToPdf.Helper
         /// <paramref name="configOptions">配置转换器</paramref>
         /// <paramref name="afterProcess">处理完成后的动作</paramref>
         /// </summary>
-        public static void ExcelToHtml(string excelFilePath, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter>? configOptions = null, Action<ExcelToHtmlConverter>? afterProcess = null)
+        public static void ExcelToHtml(string excelFilePath, string htmlFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null)
         {
             IWorkbook workbook = GetWorkbook(excelFilePath);
             ExcelToHtml(workbook, htmlFilePath, removeSheetName, configOptions, afterProcess);
@@ -83,7 +85,7 @@ namespace ExcelToPdf.Helper
         /// <paramref name="configOptions">配置转换器</paramref>
         /// <paramref name="afterProcess">处理完成后的动作</paramref>
         /// </summary>
-        public static Stream ExcelToHtml(IWorkbook workbook, bool removeSheetName = true, Action<ExcelToHtmlConverter>? configOptions = null, Action<ExcelToHtmlConverter>? afterProcess = null)
+        public static Stream ExcelToHtml(IWorkbook workbook, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null)
         {
             ExcelToHtmlConverter excelToHtmlConverter = new ExcelToHtmlConverter();
 

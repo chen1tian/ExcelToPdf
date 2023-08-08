@@ -24,7 +24,7 @@ namespace ExcelToPdf.Extensions
             var pdfConverter = new SynchronizedConverter(new PdfTools());
             services.AddSingleton(typeof(IConverter), pdfConverter);
 
-            services.AddTransient<ExcelToPdfService>(services =>
+            services.AddTransient<ExcelToPdfService>(sv =>
             {
                 return new ExcelToPdfService(pdfConverter, tempDir);
             });

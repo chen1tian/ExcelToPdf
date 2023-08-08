@@ -3,6 +3,7 @@ using NPOI.SS.Converter;
 using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace ExcelToPdf
         /// <param name="configOptions"></param>
         /// <param name="afterProcess"></param>
         /// <param name="configPdfGlobalSettings"></param>
-        public void ExportToPdf(IWorkbook workbook, string pdfFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null, Action<GlobalSettings>? configPdfGlobalSettings = null)
+        public void ExportToPdf(IWorkbook workbook, string pdfFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null, Action<GlobalSettings> configPdfGlobalSettings = null)
         {
             // setup temp directory
             var tempDir = new DirectoryInfo(_tempDir);
@@ -46,7 +47,7 @@ namespace ExcelToPdf
             }
 
             // 1. export html first
-            var htmlFilePath = Path.Combine(tempDir.FullName, $"temp_excel_html_{Guid.NewGuid}.html");
+            var htmlFilePath = Path.Combine(tempDir.FullName, $"temp_excel_html_{Guid.NewGuid()}.html");
             NpoiExcelHelper.ExcelToHtml(workbook, htmlFilePath, removeSheetName, configOptions, afterProcess);
 
             // 2. convert html to pdf
@@ -65,7 +66,7 @@ namespace ExcelToPdf
         /// <param name="configOptions"></param>
         /// <param name="afterProcess"></param>
         /// <param name="configPdfGlobalSettings"></param>
-        public void ExportToPdf(string excelFilePath, string pdfFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null, Action<GlobalSettings>? configPdfGlobalSettings = null)
+        public void ExportToPdf(string excelFilePath, string pdfFilePath, bool removeSheetName = true, Action<ExcelToHtmlConverter> configOptions = null, Action<ExcelToHtmlConverter> afterProcess = null, Action<GlobalSettings> configPdfGlobalSettings = null)
         {
             var workbook = NpoiExcelHelper.GetWorkbook(excelFilePath);
             ExportToPdf(workbook, pdfFilePath, removeSheetName, configOptions, afterProcess, configPdfGlobalSettings);

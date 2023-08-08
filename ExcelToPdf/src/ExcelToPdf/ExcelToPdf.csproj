@@ -1,31 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Version>6.0.2</Version>
+		<Authors>chen1tian</Authors>
+		<Company />
+		<Description>a simple lib to export Excel to PDF.</Description>
+		<PackageProjectUrl>https://github.com/chen1tian/ExcelToPdf</PackageProjectUrl>
+		<PackageReadmeFile>README_En.md</PackageReadmeFile>
+		<PackageTags>pdf,excel to pdf</PackageTags>
+		<PackageLicenseExpression>0BSD</PackageLicenseExpression>
+		<LangVersion>7.3</LangVersion>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <Version>6.0.2</Version>
-    <Authors>chen1tian</Authors>
-    <Company />
-    <Description>a simple lib to export Excel to PDF.</Description>
-    <PackageProjectUrl>https://github.com/chen1tian/ExcelToPdf</PackageProjectUrl>
-    <PackageReadmeFile>README_En.md</PackageReadmeFile>
-    <PackageTags>pdf,excel to pdf</PackageTags>
-    <PackageLicenseExpression>0BSD</PackageLicenseExpression>
-  </PropertyGroup>
+	<ItemGroup>
+		<None Include="..\..\..\doc\README_En.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\..\..\doc\README_En.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
-    <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.66" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-    <PackageReference Include="PdfSharpCore" Version="1.3.11" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
+		<PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.66" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+		<PackageReference Include="PdfSharpCore" Version="1.3.11" />
+	</ItemGroup>
 
 </Project>

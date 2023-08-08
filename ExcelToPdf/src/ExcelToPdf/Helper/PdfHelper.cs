@@ -22,7 +22,7 @@ namespace ExcelToPdf.Helper
         /// <param name="pdfFilePath"></param>
         /// <param name="converter">转换器</param>
         /// <param name="configGlobalSettings"></param>
-        public static void HtmlToPdf(this IConverter converter, string htmlFilePath, string pdfFilePath, Action<GlobalSettings>? configGlobalSettings = null)
+        public static void HtmlToPdf(this IConverter converter, string htmlFilePath, string pdfFilePath, Action<GlobalSettings> configGlobalSettings = null)
         {
             // 默认配置
             var globalSettings = new GlobalSettings()
