@@ -1,5 +1,6 @@
 ﻿using NPOI.HSSF.UserModel;
 using NPOI.SS.Converter;
+using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
@@ -108,8 +109,16 @@ namespace ExcelToPdf.Helper
             if (removeSheetName)
             {
                 // 去掉html中的sheet名称
-                var clearHtml = Regex.Replace(excelToHtmlConverter.Document.InnerXml, "<h2>.*</h2>", "");
+                var clearHtml = Regex.Replace(excelToHtmlConverter.Document.InnerXml, "<h2>.*?</h2>", "");
                 excelToHtmlConverter.Document.InnerXml = clearHtml;
+
+                //添加表格样式 去掉sheet名称后表格加一个间隔
+                var findStr = "table.t1{";
+                excelToHtmlConverter.Document.InnerXml =
+                    excelToHtmlConverter.Document.InnerXml.Insert(
+                        excelToHtmlConverter.Document.InnerXml.IndexOf(findStr, 0) + findStr.Length,
+                        @"margin-top:10px;"
+                    );
             }
 
             // 处理后工作
@@ -126,7 +135,7 @@ namespace ExcelToPdf.Helper
                 );
 
             // 输出
-            var stream = new MemoryStream();
+            var stream = new MemoryStream();            
             excelToHtmlConverter.Document.Save(stream);
             stream.Position = 0;
             return stream;

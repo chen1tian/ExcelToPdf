@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<ImplicitUsings>disable</ImplicitUsings>
-		<Version>6.0.3</Version>
+		<Version>6.0.4</Version>
 		<Authors>chen1tian</Authors>
 		<Company />
 		<Description>a simple lib to export Excel to PDF.</Description>
